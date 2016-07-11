@@ -63,7 +63,7 @@ namespace DTCompileTimeTracker {
       EditorGUILayout.BeginHorizontal(GUILayout.Height(20.0f));
         EditorGUILayout.Space();
         float toggleRectWidth = screenRect.width / 4.0f;
-        Rect toggleRect = new Rect(Vector2.zero, new Vector2(toggleRectWidth, 20.0f));
+        Rect toggleRect = new Rect(0.0f, 0.0f, width: toggleRectWidth, height: 20.0f);
 
         // Psuedo enum logic here
         if (CompileTimeTrackerWindow.OnlyToday && CompileTimeTrackerWindow.OnlyYesterday) {

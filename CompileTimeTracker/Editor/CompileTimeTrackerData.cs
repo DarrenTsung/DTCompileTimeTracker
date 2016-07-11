@@ -7,7 +7,7 @@ namespace DTCompileTimeTracker {
   public class CompileTimeTrackerData {
     private const int kHistoryKeyframeMaxCount = 100;
 
-    public long StartTime {
+    public int StartTime {
       get { return this._startTime; }
       set {
         this._startTime = value;
@@ -30,7 +30,7 @@ namespace DTCompileTimeTracker {
     }
 
 
-    [SerializeField] private long _startTime;
+    [SerializeField] private int _startTime;
     [SerializeField] private List<CompileTimeKeyframe> _compileTimeHistory;
 
     private string _editorPrefKey;
@@ -40,12 +40,13 @@ namespace DTCompileTimeTracker {
         this._compileTimeHistory.RemoveAt(0);
       }
 
-      EditorPrefs.SetString(this._editorPrefKey, JsonUtility.ToJson(this));
+      EditorPrefs.SetInt(this._editorPrefKey + "._startTime", this._startTime);
+      EditorPrefs.SetString(this._editorPrefKey + "._compileTimeHistory", CompileTimeKeyframe.SerializeList(this._compileTimeHistory));
     }
 
     private void Load() {
-      string serialized = EditorPrefs.GetString(this._editorPrefKey);
-      JsonUtility.FromJsonOverwrite(serialized, this);
+      this._startTime = EditorPrefs.GetInt(this._editorPrefKey + "._startTime");
+      this._compileTimeHistory = CompileTimeKeyframe.DeserializeList(EditorPrefs.GetString(this._editorPrefKey + "._compileTimeHistory"));
     }
   }
 }

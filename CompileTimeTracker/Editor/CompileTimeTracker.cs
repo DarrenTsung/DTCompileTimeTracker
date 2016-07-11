@@ -36,7 +36,7 @@ namespace DTCompileTimeTracker {
     }
 
     private static void HandleEditorFinishedCompiling() {
-      int elapsedTime = (int)(TrackingUtil.GetMilliseconds() - CompileTimeTracker._data.StartTime);
+      int elapsedTime = TrackingUtil.GetMilliseconds() - CompileTimeTracker._data.StartTime;
 
       UnityConsoleCountsByType countsByType = UnityEditorConsoleUtil.GetCountsByType();
       bool hasErrors = (countsByType.errorCount - CompileTimeTracker.StoredErrorCount) > 0;

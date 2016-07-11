@@ -5,10 +5,12 @@ Unity editor extension which tracks compile time.
 Clone the git repository and add the CompileTimeTracker folder to your Unity project.
 
 ### Supported Versions:
-Currently only Unity 5.3.0 and above is supported, due to the code using the JsonUtility class.
+Tested on Unity 5.0.0 and above. Might work on Unity 4, but haven't checked it out yet.
 
 ### Features:
 Compile time is logged automatically to console and recent compile times can be viewed in the tracker window (Window -> Compile Time Tracker Window)
+
+It also attempts to detect errors by comparing the number of error logs before compiling + after compiling, but it's not completely accurate as some code will cause errors logs during [InitializeOnLoad] or OnValidate calls.
 
 ![Window Screenshot](WindowScreenshot.png)
 
