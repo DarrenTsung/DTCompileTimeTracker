@@ -1,6 +1,8 @@
 # compile-time-tracker
 Unity editor extension which tracks compile time.
 
+How do you optimize compile time? [Read This!](https://medium.com/@darrentsung/the-clocks-ticking-how-to-optimize-compile-time-in-unity-45d1f200572b#.q8h3v6a4f)
+
 ### To install:
 Clone the git repository and add the CompileTimeTracker folder to your Unity project.
 
