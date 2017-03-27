@@ -46,8 +46,8 @@ namespace DTCompileTimeTracker {
 
     private void Load() {
       this._startTime = EditorPrefs.GetInt(this._editorPrefKey + "._startTime");
-      var key = this._editorPrefKey + "._compileTimeHistory";
-      if(EditorPrefs.HasKey(key)) {
+      string key = this._editorPrefKey + "._compileTimeHistory";
+      if (EditorPrefs.HasKey(key)) {
         this._compileTimeHistory = CompileTimeKeyframe.DeserializeList(EditorPrefs.GetString(key));
       } else {
         this._compileTimeHistory = new List<CompileTimeKeyframe>();

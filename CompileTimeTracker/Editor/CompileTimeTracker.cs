@@ -11,7 +11,7 @@ namespace DTCompileTimeTracker {
     public static event Action<CompileTimeKeyframe> KeyframeAdded = delegate {};
 
     public static IList<CompileTimeKeyframe> GetCompileTimeHistory() {
-      return CompileTimeTracker._data.GetCompileTimeHistory();
+      return CompileTimeTracker._Data.GetCompileTimeHistory();
     }
 
     static CompileTimeTracker() {
@@ -21,7 +21,16 @@ namespace DTCompileTimeTracker {
 
 
     private const string kCompileTimeTrackerKey = "CompileTimeTracker::_data";
-    private static CompileTimeTrackerData _data = new CompileTimeTrackerData(kCompileTimeTrackerKey);
+    private static CompileTimeTrackerData _data = null;
+
+    private static CompileTimeTrackerData _Data {
+        get {
+            if (_data == null) {
+                _data = new CompileTimeTrackerData(kCompileTimeTrackerKey);
+            }
+            return _data;
+        }
+    }
 
     private static int StoredErrorCount {
       get { return EditorPrefs.GetInt("CompileTimeTracker::StoredErrorCount"); }
@@ -29,20 +38,20 @@ namespace DTCompileTimeTracker {
     }
 
     private static void HandleEditorStartedCompiling() {
-      CompileTimeTracker._data.StartTime = TrackingUtil.GetMilliseconds();
+      CompileTimeTracker._Data.StartTime = TrackingUtil.GetMilliseconds();
 
       UnityConsoleCountsByType countsByType = UnityEditorConsoleUtil.GetCountsByType();
       CompileTimeTracker.StoredErrorCount = countsByType.errorCount;
     }
 
     private static void HandleEditorFinishedCompiling() {
-      int elapsedTime = TrackingUtil.GetMilliseconds() - CompileTimeTracker._data.StartTime;
+      int elapsedTime = TrackingUtil.GetMilliseconds() - CompileTimeTracker._Data.StartTime;
 
       UnityConsoleCountsByType countsByType = UnityEditorConsoleUtil.GetCountsByType();
       bool hasErrors = (countsByType.errorCount - CompileTimeTracker.StoredErrorCount) > 0;
 
       CompileTimeKeyframe keyframe = new CompileTimeKeyframe(elapsedTime, hasErrors);
-      CompileTimeTracker._data.AddCompileTimeKeyframe(keyframe);
+      CompileTimeTracker._Data.AddCompileTimeKeyframe(keyframe);
       CompileTimeTracker.KeyframeAdded.Invoke(keyframe);
     }
   }
