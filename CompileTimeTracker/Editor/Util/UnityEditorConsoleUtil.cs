@@ -18,7 +18,12 @@ namespace DTCompileTimeTracker {
 
     static UnityEditorConsoleUtil() {
       Assembly assembly = Assembly.GetAssembly(typeof(SceneView));
-      Type logEntriesType = assembly.GetType("UnityEditorInternal.LogEntries");
+      Type logEntriesType;
+#if UNITY_2017_1_OR_NEWER
+      logEntriesType = assembly.GetType("UnityEditor.LogEntries");
+#else 
+      logEntriesType  = assembly.GetType("UnityEditorInternal.LogEntries");
+#endif
 
       UnityEditorConsoleUtil._clearMethod = logEntriesType.GetMethod("Clear");
       UnityEditorConsoleUtil._getCountMethod = logEntriesType.GetMethod("GetCount");
