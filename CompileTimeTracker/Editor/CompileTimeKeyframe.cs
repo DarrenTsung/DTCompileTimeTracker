@@ -37,6 +37,10 @@ namespace DTCompileTimeTracker {
     }
 
     public static List<CompileTimeKeyframe> DeserializeList(string serialized) {
+      if (String.IsNullOrEmpty(serialized)) {
+        return new List<CompileTimeKeyframe>();
+      }
+
       string[] serializedKeyframes = serialized.Split(CompileTimeKeyframe.kListDelimiterArray, StringSplitOptions.None);
 
       return serializedKeyframes.Select(s => CompileTimeKeyframe.Deserialize(s)).Where(k => k != null).ToList();
