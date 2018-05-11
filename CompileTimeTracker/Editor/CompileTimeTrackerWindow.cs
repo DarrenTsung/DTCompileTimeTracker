@@ -96,7 +96,7 @@ namespace DTCompileTimeTracker {
         CompileTimeTrackerWindow.LogToConsole = EditorGUILayout.Toggle("Log Compile Time", CompileTimeTrackerWindow.LogToConsole);
       EditorGUILayout.EndHorizontal();
 
-      this._scrollPosition = EditorGUILayout.BeginScrollView(this._scrollPosition, GUILayout.Height(screenRect.height - 60.0f));
+      this._scrollPosition = EditorGUILayout.BeginScrollView(this._scrollPosition, GUILayout.Height(screenRect.height - 64.0f));
         foreach (CompileTimeKeyframe keyframe in this.GetFilteredKeyframes()) {
           string compileText = string.Format("({0:hh:mm tt}): ", keyframe.Date);
           compileText += TrackingUtil.FormatMSTime(keyframe.elapsedCompileTimeInMS);
@@ -113,7 +113,16 @@ namespace DTCompileTimeTracker {
       if (EditorApplication.isCompiling) {
         statusBarText = "Compiling.. || " + statusBarText;
       }
-      GUILayout.Label(statusBarText);
+
+      EditorGUILayout.BeginHorizontal(GUILayout.Height(24.0f));
+        GUILayout.Label(statusBarText);
+        if (GUILayout.Button("Export CSV", GUILayout.ExpandWidth(false))) {
+          GenericMenu menu = new GenericMenu();
+          menu.AddItem(new GUIContent("All"), false, ExportAllCSV);
+          menu.AddItem(new GUIContent("Filtered"), false, ExportFilteredCSV);
+          menu.ShowAsContext();
+        }
+      EditorGUILayout.EndHorizontal();
     }
 
     void OnEnable() {
@@ -139,6 +148,22 @@ namespace DTCompileTimeTracker {
       }
 
       return filteredKeyframes;
+    }
+
+    private void ExportAllCSV() {
+      IEnumerable<CompileTimeKeyframe> allKeyframes = CompileTimeTracker.GetCompileTimeHistory();
+      ExportCSV(allKeyframes, "all_compile_times");
+    }
+
+    private void ExportFilteredCSV() {
+      IEnumerable<CompileTimeKeyframe> filteredKeyframes = GetFilteredKeyframes();
+      ExportCSV(filteredKeyframes, "filtered_compile_times");
+    }
+
+    private void ExportCSV(IEnumerable<CompileTimeKeyframe> keyframes, string fileName) {
+      var path = EditorUtility.SaveFilePanel("Export compile times to CSV", "", string.Format("{0}.csv", fileName), "csv");
+      var csv = CompileTimeKeyframe.ToCSV(keyframes as List<CompileTimeKeyframe>);
+      System.IO.File.WriteAllText(path, csv);
     }
 
     private void HandleEditorStartedCompiling() {

@@ -51,6 +51,20 @@ namespace DTCompileTimeTracker {
       return string.Join(CompileTimeKeyframe.kListDelimiter, serializedKeyframes);
     }
 
+    public static string ToCSV(CompileTimeKeyframe keyframe) {
+      if (keyframe == null) {
+        return "";
+      }
+
+      return string.Format("{0},{1},{2}", keyframe._computedDate, keyframe.elapsedCompileTimeInMS, keyframe.hadErrors);
+    }
+
+    public static string ToCSV(List<CompileTimeKeyframe> keyframes) {
+      string[] serializedKeyframes = keyframes.Where(k => k != null).Select(k => CompileTimeKeyframe.ToCSV(k)).ToArray();
+      string fields = "date,compile_time,had_errors\n";
+      return fields + string.Join("\n", serializedKeyframes);
+    }
+
 
     // PRAGMA MARK - Public Interface
     public DateTime Date {
