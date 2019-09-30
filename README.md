@@ -12,8 +12,8 @@ Tested on Unity 5.0.0 and above. Might work on Unity 4, but haven't checked it o
 ### Features:
 Compile time is logged automatically to console and recent compile times can be viewed in the tracker window (Window -> Compile Time Tracker Window)
 
-It also attempts to detect errors by comparing the number of error logs before compiling + after compiling, but it's not completely accurate as some code will cause errors logs during [InitializeOnLoad] or OnValidate calls.
+It also attempts to detect errors by comparing the number of error logs before compiling + after compiling, but it's not completely accurate as some code will cause errors logs during `[InitializeOnLoad]` or `OnValidate` calls.
 
-![Window Screenshot](WindowScreenshot.png)
+![Window Screenshot](img/WindowScreenshot.png)
 
-![Menu Screenshot](MenuScreenshot.png)
+![Menu Screenshot](img/MenuScreenshot.png)
