@@ -1,6 +1,6 @@
 {
   "name": "com.darrentsung.dtcompiletimetracker",
-  "displayName": "SUCC",
+  "displayName": "Compile Time Tracker",
   "version": "1.0.0",
   "unity": "2019.1",
   "description": "Unity editor extension which tracks compile time",
