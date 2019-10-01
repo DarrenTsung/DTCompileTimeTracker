@@ -6,6 +6,12 @@ How do you optimize compile time? [Read This!](https://medium.com/@darrentsung/t
 ### To install:
 Clone the git repository and add the CompileTimeTracker folder to your Unity project.
 
+Alternatively, this repository can be installed via the Unity Package Manager. Add the following under `dependencies` in your project's `manifest.json`:
+
+```
+"com.darrentsung.dtcompiletimetracker": "https://github.com/DarrenTsung/DTCompileTimeTracker.git"
+```
+
 ### Supported Versions:
 Tested on Unity 5.0.0 and above. Might work on Unity 4, but haven't checked it out yet.
 
